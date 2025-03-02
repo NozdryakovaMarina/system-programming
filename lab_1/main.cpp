@@ -35,7 +35,7 @@ void createFile(const char* path, const char* content){
     int fd = open(path, O_CREAT | O_RDWR, S_IRWXO|S_IRWXU|S_IRWXG);
 
     if(fd < 0){
-        cerr << "Can`t open file" << endl;
+        cerr << "Can`t open file" << path << endl;
         exit(1);
     }
 
@@ -61,7 +61,7 @@ int main() {
     int fd_c2 = open("./ROOT/a_1/b_1/c_2.bin", O_CREAT | O_RDWR, S_IRWXO|S_IRWXU|S_IRWXG);
 
     if(fd_c2 == -1){
-        cerr << "Can't open file" << endl;
+        cerr << "Can't open file c_2.bin" << endl;
         exit(1);
     }
 
@@ -73,31 +73,15 @@ int main() {
 
     close(fd_c2);
 
-    int fd_a2 = open("./ROOT/a_2.txt", O_CREAT | O_RDWR, S_IRWXO|S_IRWXU|S_IRWXG);
-
-    if(fd_a2 == -1){
-        cerr << "Can`t open file" << endl;
-        exit(1);
-    }
-
-    if(symlink("./ROOT/a_1/b_3.txt", "./ROOT/a_2.txt") == -1){
+   if(symlink("b_3.txt", "./ROOT/a_2.txt") == -1){
         cout << "Link error" << endl;
-    }
-
-    close(fd_a2);
-
-    int fd_b2 = open("./ROOT/a_1/b_2.bin", O_CREAT | O_RDWR, S_IRWXO|S_IRWXU|S_IRWXG);
-
-    if(fd_b2 == -1){
-        cerr << "Can`t open file" << endl;
-        exit(1);
     }
 
     if(link("./ROOT/a_1/b_1/c_2.bin", "./ROOT/a_1/b_2.bin") == -1){
         cout << "Link error" << endl;
     }
-
-    close(fd_b2);
+    
+    delete[] buffer;
 
     return 0;
 }
